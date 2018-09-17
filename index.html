@@ -1,0 +1,10 @@
+<h1>hello</h1>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.dev.js"></script>
+<script>
+  var socket = io();
+
+  socket.on('test', function() {
+    console.log("boing! that was a test!");
+  })
+</script>
