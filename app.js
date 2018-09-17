@@ -2,18 +2,15 @@ let app = require('express')();
 let http = require('http').Server(app);
 let path = require('path');
 
-console.log('gonna require io');
-let io = require('./endpoint.io').wrapper(http);
+let { endpointio, inject } = require('./endpoint.io');
+let io = endpointio(http);
 
-setTimeout(() =>require('./io'), 2000);
 
 app.get('/', (req, res) => {
-
   res.status(200).sendFile(path.join(__dirname, './index.html'));
-
 });
 
-app.post('/', require('./io').inject, (req, res) => {
+app.post('/', inject, (req, res) => {
   res.io.emit('test');
   res.status(204).send();
 });
