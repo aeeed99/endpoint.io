@@ -1,26 +1,37 @@
-console.log('START OF SCRIPT ', typeof io);
-
-function inject (req, res, next) {
-  console.log('injecting, wrapper is ', typeof io);
-  if (!io) {
-    throw new Error('io not implemented');
-  }
-  res.io = io;
-  next();
-}
-
-function io(http) {
-
+function main(http) {
   io = require('socket.io')(http);
   return io;
 }
-io.get = getio;
 
-function getio() {
+function inject (req, res, next) {
+
+  if (!io) {
+    throw new Error('io not implemented');
+  }
+
+  res.io = io;
+
+  res.emit = (eventName, ...data) => {
+    try {
+      io.emit(eventName, ...data);
+      res.status(200).send({eventName, data});
+    }
+    catch (e) {
+      res.status(500).send(e);
+    }
+  };
+
+  next();
+}
+
+function get() {
   if (!io) {
     return null;
   }
   return io;
 }
 
-module.exports = {io, inject, getio};
+main.inject = inject;
+main.get = get;
+main.endpointio = main;
+module.exports = main;
