@@ -1,9 +1,11 @@
 let app = require('express')();
 let http = require('http').Server(app);
 let path = require('path');
-let io = require('./io')(http);
 
+console.log('gonna require io');
+let io = require('./endpoint.io').wrapper(http);
 
+setTimeout(() =>require('./io'), 2000);
 
 app.get('/', (req, res) => {
 
@@ -11,10 +13,9 @@ app.get('/', (req, res) => {
 
 });
 
-app.post('/', (req, res) => {
-  io = require('./io').get();
-  io2.emit('test');
-
+app.post('/', require('./io').inject, (req, res) => {
+  res.io.emit('test');
+  res.status(204).send();
 });
 
 http.listen(4444, () => {
