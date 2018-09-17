@@ -1,21 +1,21 @@
-
-
-function main(http) {
-
-  io = require('socket.io')(http);
-
-  io.on('connection', (socket) => {
-    console.log('a new user connected');
-    io.emit('test');
-  })
+function inject (req, res, next) {
+  if (!io) {
+    throw new Error('ioWrapper not implemented');
+  }
+  req.io = io;
+  next();
 }
 
-main.get = function() {
-  try {
-    return io;
-  }
-  catch (e) {
-  }
-};
+function wrapper(http) {
+  io = require('socket.io')(http);
+  return io;
+}
 
-module.exports = main;
+function getSocket() {
+  if (!io) {
+    return null;
+  }
+  return io;
+}
+
+module.exports = {wrapper, inject};
