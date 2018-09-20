@@ -1,6 +1,6 @@
 # endpoint.io - socket emitting everywhere!
 
-endpoint.io is [express around [socket.io](socket.io), which manages
+endpoint.io is [express] around [socket.io](socket.io), which manages
 the socket object as a singleton, and exposes it
 
 > installing this package also installs socket.io and opens its connection when the main function is invoked, so there is no need to install socket.io directly. If you prefer to manage socket.io yourself and just use the endpoint.io wrapper, try using [endpoint-wrapper.io](#)
