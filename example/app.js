@@ -2,7 +2,7 @@ let app = require('express')();
 let http = require('http').Server(app);
 let path = require('path');
 
-let { endpointio, inject } = require('./endpoint.io');
+let { endpointio, inject } = require('../endpoint.io');
 let io = endpointio(http);
 
 
@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 
 app.post('/', inject, (req, res) => {
   res.io.emit('test');
-  res.status(204).send();
+  res.status(204).send();0
 });
 
 http.listen(4444, () => {
