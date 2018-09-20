@@ -1,9 +1,9 @@
 # endpoint.io - socket emitting everywhere!
 
-endpoint.io is [express] around [socket.io](socket.io), which manages
+endpoint.io is [express](https://expressjs.com) middleware that wraps around [socket.io](socket.io), which manages
 the socket object as a singleton, and exposes it
 
-> installing this package also installs socket.io and opens its connection when the main function is invoked, so there is no need to install socket.io directly. If you prefer to manage socket.io yourself and just use the endpoint.io wrapper, try using [endpoint-wrapper.io](#)
+> installing this package also installs socket.io and opens its connection when the main function is invoked, so there is no need to install socket.io directly. If you prefer to manage socket.io yourself and just use the endpoint.io wrapper, try using [endpoint-wrapper.io](https://www.npmjs.com/package/endpoint-wrapper.io)
 
 ## Usage (high-level)
 
@@ -24,7 +24,7 @@ let { inject } = require('endpoint.io');
 
 router.post('/notify', inject, (req, res) => {
 
-    res.io.emit('event-from-endpoint', ...req.data);
+    res.io.emit('event-from-endpoint', ...req.body);
 
     res.status(200).send('data emitted via socket');
 });
@@ -40,7 +40,7 @@ let { inject } = require('endpoint.io');
 
 router.post('/notify', inject, (req, res) => {
 
-    res.emit('socket-response', ...req.data);
+    res.emit('socket-response', ...req.body);
 
 });
 ```
